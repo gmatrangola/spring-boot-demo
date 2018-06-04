@@ -5,7 +5,14 @@
 # * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
 
-POST http://localhost:8080/new?first=Geoff&last=Matrangola
+PUT http://localhost:8080/users/new?first=Geoff&last=Matrangola
+Content-Type: application/json
 Accept: application/json
 
+{
+  "firstName": "Hannah",
+  "lastName": "Matrangola"
+}
+
 ###
+

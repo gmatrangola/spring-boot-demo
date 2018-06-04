@@ -1,6 +1,7 @@
 package com.matrangola.springbootdemo.data.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "user")
@@ -13,6 +14,12 @@ public class User {
     private String firstName;
     @Column
     private String lastName;
+    @Column
+    private Date birthday;
+
+    public Long getId() {
+        return id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -28,5 +35,13 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 }
