@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @RestController
 @RequestMapping( value = "/users")
@@ -15,7 +16,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    private static final SimpleDateFormat BIRTHDAY_TEXT_FORMAT = new SimpleDateFormat("YYYYMMdd");
+    private static final SimpleDateFormat BIRTHDAY_TEXT_FORMAT = new SimpleDateFormat("yyyyMMdd");
 
     @RequestMapping(value = "/new", method = RequestMethod.POST)
     public User add(
@@ -23,7 +24,7 @@ public class UserController {
             String firstName,
             @RequestParam(value = "last")
             String lastName,
-            @RequestParam(required = false)
+            @RequestParam(value = "birthday", required = false)
             String birthdayText) {
 
         User user = new User();
@@ -31,7 +32,8 @@ public class UserController {
         user.setLastName(lastName);
         if (birthdayText != null) {
             try {
-                user.setBirthday(BIRTHDAY_TEXT_FORMAT.parse(birthdayText));
+                Date date = BIRTHDAY_TEXT_FORMAT.parse(birthdayText);
+                user.setBirthday(date);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -51,5 +53,10 @@ public class UserController {
     public String picture(@PathVariable("userId")int userId, @RequestBody byte[] bytes) {
         String result =  "User ID: " + userId + " uploaded " + bytes.length + " bytes";
         return result;
+    }
+
+    @RequestMapping(value = "get/{id}")
+    public User getUser(@PathVariable("id") long id) {
+        return userService.getUser(id);
     }
 }
