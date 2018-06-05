@@ -5,6 +5,9 @@ import com.matrangola.springbootdemo.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.InvalidParameterException;
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -27,7 +30,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(Long id) {
-        return userRepository.findById(id).get();
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (!optionalUser.isPresent()) throw new InvalidParameterException("No ID " + id);
+        return optionalUser.get();
     }
 
     // todo delete

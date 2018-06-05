@@ -19,7 +19,7 @@ public class UserTest {
     public void lastName() {
         User ln = new User();
         ln.setLastName("last");
-        assertEquals("last", ln.getFirstName());
+        assertEquals("last", ln.getLastName());
     }
 
     @Test

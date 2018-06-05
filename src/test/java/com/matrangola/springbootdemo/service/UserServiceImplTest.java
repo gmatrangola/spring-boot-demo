@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.Optional;
 
@@ -164,7 +165,13 @@ public class UserServiceImplTest {
 
     @Test
     public void getUser() {
-        User user = userServiceImpl.getUser(1L);
-        assertNull(user);
+        try {
+            User user = userServiceImpl.getUser(1L);
+            assert(false);
+        }
+        catch (InvalidParameterException e)
+        {
+
+        }
     }
 }
