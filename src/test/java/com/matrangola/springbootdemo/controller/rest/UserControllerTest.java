@@ -48,6 +48,7 @@ public class UserControllerTest {
     private UserRepository userRepository;
     private User user1;
     private User user2;
+    private String jsonUser1;
 
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
@@ -58,7 +59,7 @@ public class UserControllerTest {
     }
 
     @Before
-    public void setup() {
+    public void setup() throws IOException {
         mockMvc = webAppContextSetup(webApplicationContext).build();
 
         Calendar calendar = Calendar.getInstance();
@@ -67,6 +68,7 @@ public class UserControllerTest {
         Date birthday = new Date(calendar.getTimeInMillis());
         user1 = userRepository.save(new User("First1", "last1", birthday));
         user2 = userRepository.save(new User("First2", "Last2", birthday));
+        jsonUser1 = json(user1);
     }
 
     @Test
@@ -81,7 +83,7 @@ public class UserControllerTest {
     public void getUser() throws Exception {
         mockMvc.perform(get("/users/1").contentType(JSON_CONTEXT_TYPE))
                 .andExpect(status().isOk())
-                .andExpect(content().json(json(user1)));
+                .andExpect(content().json(jsonUser1));
     }
 
     public String json(Object o) throws IOException {

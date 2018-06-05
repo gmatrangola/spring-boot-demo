@@ -5,7 +5,19 @@
 # * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
 
-GET http://localhost:8080/users/1
-Accept: application/json
+// run AddUser first
+
+PUT localhost:8080/gadgets/add
+Content-Type: application/json
+
+{
+   "name": "Deco",
+   "owner":{
+            "id": 1,
+            "firstName": "Geoff",
+            "lastName": "Matrangola"
+         }
+}
+
 
 ###
