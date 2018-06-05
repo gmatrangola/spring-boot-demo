@@ -13,10 +13,14 @@ import java.util.Date;
 @RequestMapping( value = "/users")
 public class UserController {
 
-    @Autowired
-    UserService userService;
+    private final UserService userService;
 
     private static final SimpleDateFormat BIRTHDAY_TEXT_FORMAT = new SimpleDateFormat("yyyyMMdd");
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/new", method = RequestMethod.POST)
     public User add(
