@@ -17,11 +17,7 @@ Content-Type: application/json
             "firstName": "Geoff",
             "lastName": "Matrangola"
          },
-   "color" : {
-      "red": "20",
-      "green": "20",
-      "blue" : "190"
-   }
+   "color" : { "rgb": "FF2020" }
 }
 
 

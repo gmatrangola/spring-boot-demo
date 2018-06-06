@@ -1,9 +1,16 @@
 package com.matrangola.springbootdemo.data.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.matrangola.springbootdemo.data.seralization.ColorDeseralizer;
+import com.matrangola.springbootdemo.data.seralization.ColorSerializer;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "color")
+@JsonSerialize(using = ColorSerializer.class)
+@JsonDeserialize(using = ColorDeseralizer.class)
 public class Color {
     @Id
     @GeneratedValue
