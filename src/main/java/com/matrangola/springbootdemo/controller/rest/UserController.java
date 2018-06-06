@@ -3,6 +3,8 @@ package com.matrangola.springbootdemo.controller.rest;
 import com.matrangola.springbootdemo.data.model.User;
 import com.matrangola.springbootdemo.exception.ResourceException;
 import com.matrangola.springbootdemo.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,7 @@ import java.util.Date;
 @RestController
 @RequestMapping( value = "/users")
 public class UserController extends Controller {
+    Logger LOG = LoggerFactory.getLogger(UserController.class);
 
     private final UserService userService;
 
@@ -31,7 +34,7 @@ public class UserController extends Controller {
             String lastName,
             @RequestParam(value = "birthday", required = false)
             String birthdayText) {
-
+        LOG.debug("add");
         User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
@@ -50,18 +53,23 @@ public class UserController extends Controller {
 
     @RequestMapping(value = "/new", method = RequestMethod.PUT)
     public User addUser(@RequestBody User user) {
+        LOG.debug("add");
         userService.addUser(user);
         return user;
     }
 
     @RequestMapping(path = "/picture/{userId}", method = RequestMethod.PUT, consumes = {"image/jpeg"})
     public String picture(@PathVariable("userId")int userId, @RequestBody byte[] bytes) {
+        LOG.debug("picture");
         String result =  "User ID: " + userId + " uploaded " + bytes.length + " bytes";
         return result;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public User getUser(@PathVariable("id") long id) throws ResourceException {
-        return userService.getUser(id);
+        LOG.debug("getUser {}", id);
+        User user = userService.getUser(id);
+        LOG.debug("got user {}", user);
+        return user;
     }
 }

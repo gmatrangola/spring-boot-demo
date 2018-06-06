@@ -1,0 +1,23 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/demo
+    username: dnb
+    password: spring
+---
+spring:
+  profiles: development
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+---
+spring:
+  profiles: production
+logging:
+  level:
+    org.hibernate.SQL: WARN
+  file: logs/log.txt

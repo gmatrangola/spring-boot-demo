@@ -70,4 +70,15 @@ public class User {
     public Set<Gadget> getGadgets() {
         return gadgets;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthday=" + birthday +
+                ", gadgets=" + gadgets +
+                '}';
+    }
 }

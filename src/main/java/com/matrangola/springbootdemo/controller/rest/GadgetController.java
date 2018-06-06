@@ -2,11 +2,11 @@ package com.matrangola.springbootdemo.controller.rest;
 
 import com.matrangola.springbootdemo.data.model.Gadget;
 import com.matrangola.springbootdemo.data.repository.GadgetRepository;
+import com.matrangola.springbootdemo.exception.ResourceException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping( path = "/gadgets")
@@ -23,5 +23,12 @@ public class GadgetController {
     public Gadget add(@RequestBody Gadget gadget) {
         gadgetRepository.save(gadget);
         return gadget;
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    public Gadget getGadget(@PathVariable("id") long id) throws ResourceException {
+        Optional<Gadget> gadget = gadgetRepository.findById(id);
+        if (!gadget.isPresent()) throw new ResourceException(Gadget.class, id);
+        return gadget.get();
     }
 }
