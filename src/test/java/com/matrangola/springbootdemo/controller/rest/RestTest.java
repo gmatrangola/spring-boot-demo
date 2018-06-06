@@ -1,5 +1,6 @@
 package com.matrangola.springbootdemo.controller.rest;
 
+import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -11,6 +12,8 @@ import org.springframework.web.context.WebApplicationContext;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Arrays;
+
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 public abstract class RestTest {
     public static final MediaType JSON_CONTEXT_TYPE = new MediaType(MediaType.APPLICATION_JSON.getType(),
@@ -34,4 +37,10 @@ public abstract class RestTest {
         this.mappingJackson2HttpMessageConver.write(o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
         return mockHttpOutputMessage.getBodyAsString();
     }
+
+    @Before
+    public void setup() throws IOException {
+        mockMvc = webAppContextSetup(webApplicationContext).build();
+    }
+
 }

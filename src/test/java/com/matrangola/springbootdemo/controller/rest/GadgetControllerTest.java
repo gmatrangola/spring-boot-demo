@@ -12,10 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import java.io.IOException;
 import java.util.Date;
 
-import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @RunWith(SpringRunner.class)
@@ -39,7 +37,7 @@ public class GadgetControllerTest extends RestTest {
 
         gadget.setOwner(user);
 
-        mockMvc.perform(post("/gadget/add").contentType(JSON_CONTEXT_TYPE).content(json(gadget)));
+        String json = json(gadget);
+        mockMvc.perform(post("/gadget/add").contentType(JSON_CONTEXT_TYPE).content(json));
     }
-
 }
