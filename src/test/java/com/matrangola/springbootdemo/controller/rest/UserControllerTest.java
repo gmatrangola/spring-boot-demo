@@ -33,30 +33,14 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SpringBootDemoApplication.class)
 @WebAppConfiguration
-public class UserControllerTest {
-    public static final MediaType JSON_CONTEXT_TYPE = new MediaType(MediaType.APPLICATION_JSON.getType(),
-            MediaType.APPLICATION_JSON.getSubtype(),
-            Charset.forName("utf8"));
-
-    private MockMvc mockMvc;
-    private HttpMessageConverter mappingJackson2HttpMessageConver;
-
-    @Autowired
-    private WebApplicationContext webApplicationContext;
+public class UserControllerTest extends RestTest {
 
     @Autowired
     private UserRepository userRepository;
+
     private User user1;
     private User user2;
     private String jsonUser1;
-
-    @Autowired
-    void setConverters(HttpMessageConverter<?>[] converters) {
-        mappingJackson2HttpMessageConver = Arrays.stream(converters)
-                .filter( hmc -> hmc instanceof MappingJackson2HttpMessageConverter)
-                .findAny()
-                .orElse(null);
-    }
 
     @Before
     public void setup() throws IOException {
@@ -86,9 +70,4 @@ public class UserControllerTest {
                 .andExpect(content().json(jsonUser1));
     }
 
-    public String json(Object o) throws IOException {
-        MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
-        this.mappingJackson2HttpMessageConver.write(o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
-        return mockHttpOutputMessage.getBodyAsString();
-    }
 }
