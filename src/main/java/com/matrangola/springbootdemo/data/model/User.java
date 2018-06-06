@@ -2,6 +2,7 @@ package com.matrangola.springbootdemo.data.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -25,6 +26,7 @@ public class User {
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL,
     fetch = FetchType.EAGER)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Set<Gadget> gadgets;
 
     public User() {
