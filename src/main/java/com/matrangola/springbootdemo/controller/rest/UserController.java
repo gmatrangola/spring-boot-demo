@@ -1,6 +1,7 @@
 package com.matrangola.springbootdemo.controller.rest;
 
 import com.matrangola.springbootdemo.data.model.User;
+import com.matrangola.springbootdemo.exception.ResourceException;
 import com.matrangola.springbootdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +12,7 @@ import java.util.Date;
 
 @RestController
 @RequestMapping( value = "/users")
-public class UserController {
+public class UserController extends Controller {
 
     private final UserService userService;
 
@@ -60,7 +61,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public User getUser(@PathVariable("id") long id) {
+    public User getUser(@PathVariable("id") long id) throws ResourceException {
         return userService.getUser(id);
     }
 }

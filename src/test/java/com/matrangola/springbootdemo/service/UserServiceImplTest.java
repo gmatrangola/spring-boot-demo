@@ -2,6 +2,7 @@ package com.matrangola.springbootdemo.service;
 
 import com.matrangola.springbootdemo.data.model.User;
 import com.matrangola.springbootdemo.data.repository.UserRepository;
+import com.matrangola.springbootdemo.exception.ResourceException;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.data.domain.Example;
@@ -9,11 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.Optional;
-
-import static org.junit.Assert.assertNull;
 
 public class UserServiceImplTest {
 
@@ -169,7 +167,7 @@ public class UserServiceImplTest {
             User user = userServiceImpl.getUser(1L);
             assert(false);
         }
-        catch (InvalidParameterException e)
+        catch (ResourceException e)
         {
 
         }

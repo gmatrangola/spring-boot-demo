@@ -8,6 +8,7 @@
 PUT http://localhost:8080/users/new?first=Geoff&last=Matrangola
 Content-Type: application/json
 Accept: application/json
+Origin: http://www.ezSmartDevices.com
 
 {
   "firstName": "Geoff",
