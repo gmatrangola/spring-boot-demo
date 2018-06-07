@@ -1,0 +1,6 @@
+POST http://localhost:8080/oauth/token?grant_type=password&username=geoff@example.com&password=password
+Accept: application/json
+Authorization: Basic Y29ycDpzZWNyZXQ=
+
+###
+

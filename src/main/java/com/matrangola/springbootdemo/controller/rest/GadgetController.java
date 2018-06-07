@@ -1,5 +1,6 @@
 package com.matrangola.springbootdemo.controller.rest;
 
+import com.matrangola.springbootdemo.aop.Profiler;
 import com.matrangola.springbootdemo.data.model.Gadget;
 import com.matrangola.springbootdemo.data.repository.GadgetRepository;
 import com.matrangola.springbootdemo.exception.ResourceException;
@@ -19,6 +20,7 @@ public class GadgetController {
         gadgetRepository = repository;
     }
 
+    @Profiler
     @RequestMapping(path = "add", method = RequestMethod.PUT)
     public Gadget add(@RequestBody Gadget gadget) {
         gadgetRepository.save(gadget);
