@@ -28,6 +28,9 @@ public class UserController extends Controller {
         this.userService = userService;
     }
 
+    @Autowired
+    private Counter counter;
+
     @RequestMapping(value = "/new", method = RequestMethod.POST)
     public User add(
             @RequestParam(value = "first")
@@ -37,6 +40,7 @@ public class UserController extends Controller {
             @RequestParam(value = "birthday", required = false)
             String birthdayText) {
         LOG.debug("add");
+
         User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
@@ -69,9 +73,15 @@ public class UserController extends Controller {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public User getUser(@PathVariable("id") long id) throws ResourceException {
-        LOG.debug("getUser {}", id);
         User user = userService.getUser(id);
-        LOG.debug("got user {}", user);
+        counter.increment();
+        foo(counter);
+        LOG.debug("counter = {}", counter.getCount());
         return user;
+    }
+
+    private void foo(Counter counter) {
+        counter.increment();
+        LOG.debug("foo counter = {}", counter.getCount());
     }
 }

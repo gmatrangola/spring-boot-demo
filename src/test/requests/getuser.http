@@ -7,6 +7,6 @@
 
 GET http://localhost:8080/users/1
 Accept: application/json
-Authorization: Bearer fea0a747-cc14-4095-a685-85774ede0b60
+Authorization: Bearer 99e16610-6317-47a7-a83e-6c5bb8729d6f
 
 ###

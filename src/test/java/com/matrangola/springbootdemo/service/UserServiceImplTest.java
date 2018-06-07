@@ -9,6 +9,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,11 @@ public class UserServiceImplTest {
     private List<User> users;
 
     private UserRepository repository = new UserRepository() {
+        @Override
+        public UserDetails findOneByUsername(String username) {
+            return null;
+        }
+
         @Override
         public List<User> findAll() {
             return null;
