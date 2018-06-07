@@ -1,5 +1,6 @@
 package com.matrangola.springbootdemo.controller.rest;
 
+import com.matrangola.springbootdemo.aop.Profiler;
 import com.matrangola.springbootdemo.data.model.User;
 import com.matrangola.springbootdemo.exception.ResourceException;
 import com.matrangola.springbootdemo.service.UserService;
@@ -15,7 +16,7 @@ import java.util.Date;
 @RestController
 @RequestMapping( value = "/users")
 public class UserController extends Controller {
-    Logger LOG = LoggerFactory.getLogger(UserController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
     private final UserService userService;
 
@@ -26,6 +27,7 @@ public class UserController extends Controller {
         this.userService = userService;
     }
 
+    @Profiler
     @RequestMapping(value = "/new", method = RequestMethod.POST)
     public User add(
             @RequestParam(value = "first")
@@ -43,7 +45,7 @@ public class UserController extends Controller {
                 Date date = BIRTHDAY_TEXT_FORMAT.parse(birthdayText);
                 user.setBirthday(date);
             } catch (ParseException e) {
-                e.printStackTrace();
+                LOG.error("Could not parse {}", birthdayText, e);
             }
         }
 
@@ -51,6 +53,7 @@ public class UserController extends Controller {
         return user;
     }
 
+    @Profiler
     @RequestMapping(value = "/new", method = RequestMethod.PUT)
     public User addUser(@RequestBody User user) {
         LOG.debug("add");
@@ -58,6 +61,7 @@ public class UserController extends Controller {
         return user;
     }
 
+    @Profiler
     @RequestMapping(path = "/picture/{userId}", method = RequestMethod.PUT, consumes = {"image/jpeg"})
     public String picture(@PathVariable("userId")int userId, @RequestBody byte[] bytes) {
         LOG.debug("picture");
@@ -65,6 +69,7 @@ public class UserController extends Controller {
         return result;
     }
 
+    @Profiler
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public User getUser(@PathVariable("id") long id) throws ResourceException {
         LOG.debug("getUser {}", id);
