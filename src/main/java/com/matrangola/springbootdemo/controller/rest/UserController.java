@@ -15,6 +15,7 @@ import java.util.Date;
 
 @RestController
 @RequestMapping( value = "/users")
+@Profiler
 public class UserController extends Controller {
     private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
@@ -27,7 +28,6 @@ public class UserController extends Controller {
         this.userService = userService;
     }
 
-    @Profiler
     @RequestMapping(value = "/new", method = RequestMethod.POST)
     public User add(
             @RequestParam(value = "first")
@@ -53,7 +53,6 @@ public class UserController extends Controller {
         return user;
     }
 
-    @Profiler
     @RequestMapping(value = "/new", method = RequestMethod.PUT)
     public User addUser(@RequestBody User user) {
         LOG.debug("add");
@@ -61,7 +60,6 @@ public class UserController extends Controller {
         return user;
     }
 
-    @Profiler
     @RequestMapping(path = "/picture/{userId}", method = RequestMethod.PUT, consumes = {"image/jpeg"})
     public String picture(@PathVariable("userId")int userId, @RequestBody byte[] bytes) {
         LOG.debug("picture");
@@ -69,7 +67,6 @@ public class UserController extends Controller {
         return result;
     }
 
-    @Profiler
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public User getUser(@PathVariable("id") long id) throws ResourceException {
         LOG.debug("getUser {}", id);

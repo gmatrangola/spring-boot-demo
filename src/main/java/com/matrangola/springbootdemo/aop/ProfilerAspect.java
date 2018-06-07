@@ -18,16 +18,18 @@ public class ProfilerAspect {
 
     private Map<String, LongSummaryStatistics> methodStats = new HashMap<>();
 
-    @Around("@annotation(Profiler)")
+    @Around("@within(Profiler) || @annotation(Profiler)")
     public Object profilerExecution(ProceedingJoinPoint joinPoint) throws Throwable {
         long begin = System.currentTimeMillis();
         Object retVal = joinPoint.proceed();
         long end = System.currentTimeMillis();
+
+        String key = joinPoint.getSignature().toLongString();
         LongSummaryStatistics stat = methodStats.computeIfAbsent(
-                joinPoint.getSignature().getName(),
+                key,
                 s -> new LongSummaryStatistics());
         stat.accept(end - begin);
-        LOG.info("{}: {} {}", joinPoint.getSignature().getName(), stat.getCount(), stat.getAverage());
+        LOG.info("{}: {} {}", key, stat.getCount(), stat.getAverage());
         return retVal;
     }
 }
